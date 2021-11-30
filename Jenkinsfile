@@ -17,7 +17,7 @@ node() {
     }
      
     stage("Build Docker Image"){
-        sh "docker build -t azm:${getBuildNum()} ."
+        sh "docker build -t azm:${branchAndBuildTag()} ."
         sh "docker images"
     }
 }
