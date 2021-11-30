@@ -3,6 +3,12 @@ def branchAndBuildTag() {
     return "${env.BRANCH_NAME}${env.BUILD_NUMBER}"
 }
 
+
+def getBuildNum() {
+     return "${env.BUILD_NUMBER}"
+}
+
+
 node() {
     
     stage('checkout'){
@@ -11,7 +17,7 @@ node() {
     }
      
     stage("Build Docker Image"){
-        sh "docker build -t azm::${branchAndBuildTag()} ."
+        sh "docker build -t azm:${getBuildNum()} ."
         sh "docker images"
     }
 }
