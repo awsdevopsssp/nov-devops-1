@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: ssp-nodejs-svc
+  labels:
+    app: ssp-nodejs
+spec:
+  selector:
+    app: ssp-nodejs
+  ports:
+  - port: 9090
+    protocol: TCP
+    nodePort: 30025
+  type: LoadBalancer

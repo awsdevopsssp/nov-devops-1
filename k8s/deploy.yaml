@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssp-nodejs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ssp-nodejs
+  template:
+    metadata:
+      labels:
+        app: ssp-nodejs
+    spec:
+      containers:
+      - name: ssp-nodejs
+        image: dockerImage
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
+
+
+
+
