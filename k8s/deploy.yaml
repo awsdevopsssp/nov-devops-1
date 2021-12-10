@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ssp-nodejs
-        image: dockerImage
+        image: ssp25/ssp-nodejs-proj:buildNum
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
