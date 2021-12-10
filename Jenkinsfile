@@ -3,7 +3,7 @@ node() {
 def dockerImg = "ssp25/ssp-nodejs-proj"
     
 stage('checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/awsdevopsssp/nov-devops-1.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/release']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/awsdevopsssp/nov-devops-1.git']]])
      
     }
 stage("Build Docker Image"){
