@@ -27,7 +27,7 @@ stage("Build Docker Image"){
                     sh """
                     cd $WORKSPACE
                     echo 'Deployiong the docker image'
-                    sed "s/buildNum/azm$BUILD_NUMBER/g" ./k8s/deploy.yaml | kubectl apply --namespace devops-tools -
+                    sed "s/buildNum/azm$BUILD_NUMBER/g" ./k8s/deploy.yaml | kubectl apply --namespace devops-tools -f -
                     kubectl apply -f ./k8s/service.yaml
                     """
                 }    
