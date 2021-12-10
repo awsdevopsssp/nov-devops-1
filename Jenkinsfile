@@ -12,7 +12,7 @@ stage("Build Docker Image"){
     
     stage("Docker Push"){
         withCredentials([string(credentialsId: 'ssp25dockertoken', variable: 'dockercreds')]) {
-            echo "${dockercreds}" | docker login -u ssp25 --password-stdin
+            sh " echo ${dockercreds} | docker login -u ssp25 --password-stdin "
         }    
         sh "docker push $dockerImg:azm$BUILD_NUMBER " 
     }
