@@ -18,19 +18,27 @@ stage("Build Docker Image"){
     }
 
     stage('Deploy k8s'){
-        withCredentials([usernamePassword(credentialsId: 'awskeys', passwordVariable: 'awssecret', usernameVariable: 'awskey')]) {
-            docker.image('jshimko/kube-tools-aws:latest').inside("-u root -e AWS_ACCESS_KEY_ID=$awskey -e AWS_SECRET_ACCESS_KEY=$awssecret -e AWS_DEFAULT_REGION=us-east-1") {
-                    sh """
-                        aws eks update-kubeconfig --name azmcluster
-                        kubectl get pods -A
-                    """
-                    sh """
+        // withCredentials([usernamePassword(credentialsId: 'awskeys', passwordVariable: 'awssecret', usernameVariable: 'awskey')]) {
+        //     docker.image('jshimko/kube-tools-aws:latest').inside("-u root -e AWS_ACCESS_KEY_ID=$awskey -e AWS_SECRET_ACCESS_KEY=$awssecret -e AWS_DEFAULT_REGION=us-east-1") {
+        //             sh """
+        //                 aws eks update-kubeconfig --name azmcluster
+        //                 kubectl get pods -A
+        //             """
+        //             sh """
+        //             cd $WORKSPACE
+        //             echo 'Deployiong the docker image'
+        //             sed "s/buildNum/azm$BUILD_NUMBER/g" ./k8s/deploy.yaml | kubectl apply --namespace default -f -
+        //             """
+        //         }    
+        // }
+        withCredentials([kubeconfigFile(credentialsId: 'k3sconfig', variable: 'KUBECONFIG')]) {
+            docker.image('jshimko/kube-tools-aws:latest').inside("-u root") {
+                sh """
                     cd $WORKSPACE
                     echo 'Deployiong the docker image'
-                    sed "s/buildNum/azm$BUILD_NUMBER/g" ./k8s/deploy.yaml | kubectl apply --namespace develop -f -
-                    kubectl apply -f ./k8s/service.yaml --namespace develop
-                    """
-                }    
+                    sed "s/buildNum/azm$BUILD_NUMBER/g" ./k8s/deploy.yaml | kubectl apply --namespace default -f -
+                """
+            }
         }
     }
 }
