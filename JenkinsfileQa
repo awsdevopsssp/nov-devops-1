@@ -4,7 +4,7 @@ def dockerImg = "azeemmd03/nodejssample"
     
 stage('checkout') {
         checkout([$class: 'GitSCM', branches: [[name: '*/qa']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/awsdevopsssp/nov-devops-1.git']]])  
-   echo "Branch name is -------> ${BRANH_NAME}"
+   echo "Branch name is -------> ${BRANCH_NAME}"
    
    }
     
