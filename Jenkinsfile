@@ -8,27 +8,30 @@ pipeline {
     }
     
     stages {
-        stage("Deploy") {
+        stage("Switch Case") {
             steps {
                 script {
                     switch(params.Env) {
                         case "LIVE": 
                              switch(params.Tiers) {
                                  case "DEV":  
-                                        echo " Running in ${params.Tiers} tier of ${params.Env} Env"; break
+                                        echo " Running in ${params.Tiers} tier of ${params.Env} Env"
                                         sh " sh ${params.Env}/${params.Tiers}/dev.sh "; break
-                                 case "QA":  
-                                        echo " Running in ${params.Tiers} tier of ${params.Env} Env"; break
-                                        sh " sh ${params.Env}/${params.Tiers}/qa.sh "; break
+                                 case "QA":
+                                    sh """  
+                                        echo "Running in ${params.Tiers} tier of ${params.Env} Env"
+                                        pwd
+                                        sh ${params.Env}/${params.Tiers}/qa.sh
+                                        """; break
                                  defaut: echo " No tier inside ${params.Env}"; break
                              } ; break
                         case "2018": 
                              switch(params.Tiers) {
                                  case "DEV":  
-                                        echo " Running in ${params.Tiers} tier of ${params.Env} Env"; break
+                                        echo " Running in ${params.Tiers} tier of ${params.Env} Env"
                                         sh " sh ${params.Env}/${params.Tiers}/dev.sh "; break
                                  case "QA": 
-                                        echo " Running in ${params.Tiers} tier of ${params.Env} Env"; break
+                                        echo " Running in ${params.Tiers} tier of ${params.Env} Env"
                                         sh " sh ${params.Env}/${params.Tiers}/qa.sh "; break
                              } ; break   
                     }
